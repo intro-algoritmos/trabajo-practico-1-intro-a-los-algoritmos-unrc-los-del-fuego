@@ -99,17 +99,20 @@ public class DecodificadorMensajes
      * @param codigo es el código a utilizar para la desencripción
      */
     private String desencriptarCadena(String str, int[] codigo) {
-         if (str == null) throw new IllegalArgumentException("Cadena nula");
-        if (codigo == null) throw new IllegalArgumentException("Código inválido");
-        String resultado = "";
-        int indiceCodigo = 0;
-        for (int i = 0; i < str.length(); i++) {
-            char curr = str.charAt(i);
-            char currEncriptado = (char) ((curr + codigo[indiceCodigo]) % 128);
-            resultado = resultado + currEncriptado;
-            indiceCodigo = (indiceCodigo + 1) % (codigo.length);
-        }
-        return resultado;
+    if (str == null) throw new IllegalArgumentException("Cadena nula");
+    if (codigo == null) throw new IllegalArgumentException("Código inválido");
+
+     String resultado = ""; // Utilizar una cadena para acumular el resultado
+     int indiceCodigo = 0;
+
+    for (int i = 0; i < str.length(); i++) {
+    char caracterActual = str.charAt(i);
+    char caracterDesencriptado = (char) ((caracterActual - codigo[indiceCodigo] + 128) % 128);
+    resultado += caracterDesencriptado; // Concatenar el carácter desencriptado a la cadena resultado
+    indiceCodigo = (indiceCodigo + 1) % codigo.length;
+    } 
+
+    return resultado;
     }
     
 }
