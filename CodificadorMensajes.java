@@ -126,11 +126,23 @@ public class CodificadorMensajes
      */
     private int[] generarCodigoEncripcion(String str) 
     {
-        // TODO: Implementar este método sustituyendo la línea
-        // debajo con el código de la funcionalidad.
-        return null;
+          // Paso 1: Sumar los códigos ASCII de los caracteres en la cadena
+      int suma = 0;
+      for (int i = 0; i < str.length(); i++) {
+        suma += (int) str.charAt(i);
+    }
+    // Paso 2: Calcular el resto de la suma al dividir por 99991
+    int resto = suma % 99991;
+    
+    // Paso 3: Convertir el resto en un arreglo de dígitos
+    String restoStr = Integer.toString(resto);
+    int[] codigoEncripcion = new int[restoStr.length()];
+    for (int i = 0; i < restoStr.length(); i++) {
+        codigoEncripcion[i] = Character.getNumericValue(restoStr.charAt(i));
     }
     
+    return codigoEncripcion;
+    } 
     /**
      * Encripta una cadena, dado un código numérico. Se usan los dígitos del código
      * para reemplazar cada caracter de la cadena por el caracter correspondiente a 

@@ -57,7 +57,20 @@ public class DecodificadorMensajes
      */
     public void decodificarMensaje() 
     {
-        // TODO: Implementar este método
+      if(mensajeDecodificado !=null){
+          throw new IllegalStateException("el mensaje ya esta decodificado");
+      }
+      if(mensajeADecodificar.cantLineas()==0){
+          mensajeDecodificado=new Mensaje();
+      }
+      else{
+          mensajeDecodificado=new Mensaje();
+          for(int i=0;i<mensajeADecodificar.cantLineas();i++){
+            String curr=mensajeADecodificar.obtenerLinea(i);
+            String currDecodificada=desencriptarCadena(curr,codigoEncripcion);
+            mensajeDecodificado.agregarLinea(currDecodificada);
+          }
+      }
     }
     
     /**
@@ -86,9 +99,17 @@ public class DecodificadorMensajes
      * @param codigo es el código a utilizar para la desencripción
      */
     private String desencriptarCadena(String str, int[] codigo) {
-        // TODO: Implementar este método, sustituyendo la línea
-        // debajo con el código correspondiente a la funcionalidad
-        return null;
+         if (str == null) throw new IllegalArgumentException("Cadena nula");
+        if (codigo == null) throw new IllegalArgumentException("Código inválido");
+        String resultado = "";
+        int indiceCodigo = 0;
+        for (int i = 0; i < str.length(); i++) {
+            char curr = str.charAt(i);
+            char currEncriptado = (char) ((curr + codigo[indiceCodigo]) % 128);
+            resultado = resultado + currEncriptado;
+            indiceCodigo = (indiceCodigo + 1) % (codigo.length);
+        }
+        return resultado;
     }
     
 }

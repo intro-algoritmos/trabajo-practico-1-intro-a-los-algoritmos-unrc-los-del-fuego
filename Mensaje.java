@@ -23,7 +23,7 @@ public class Mensaje
      * líneas del mensaje
      */ 
     private ArrayList<String> lineas;
-
+       
     /**
      * Constructor por defecto de la clase Mensaje().
      * Crea un mensaje vacío.
@@ -31,8 +31,20 @@ public class Mensaje
     public Mensaje()
     {
         lineas = new ArrayList<String>();
+    }private ArrayList<String> getLineas() {
+        return new ArrayList<>(lineas);
     }
-
+     public void asignarLineas(ArrayList<String> lineas) {
+        if (lineas==null){
+            throw new IllegalArgumentException("Las líneas no deben ser nulas");
+        }
+        for (String linea : lineas) {
+            if(linea==null){
+                throw new IllegalArgumentException("La línea no debe ser nula");
+            }
+            this.lineas.add(linea);
+            }
+        }
     /**
      * Retorna la cantidad de lineas del mensaje.
      * @return cantidad de lineas del mensaje.
@@ -74,7 +86,17 @@ public class Mensaje
      */
     public void agregarLinea(int pos, String linea)
     {
-        // TODO: Implementar este método
+        // TODO: Implementar este método 
+        if (linea == null)
+            throw new IllegalArgumentException("La línea a agregar no debe ser null.");
+        if (linea.length() > LONG_MAX_LINEA)
+            throw new IllegalArgumentException("Longitud inválida. La línea no debe tener más de 80 caracteres.");
+        if (!esAscii(linea))
+            throw new IllegalArgumentException("La línea a agregar contiene caracteres no ascii.");
+        if (pos < 0 || pos > lineas.size())
+            throw new IllegalArgumentException("Posición inválida. Debe estar entre 0 y " + lineas.size() + ".");
+        
+        lineas.add(pos, linea);
     }
     
     /**
@@ -133,9 +155,20 @@ public class Mensaje
      */
     public boolean equals(Mensaje otro)
     {
-        // TODO: Implementar este método sustituyendo la línea debajo, con el 
-        // código de la implementación
-        return false;
+        ArrayList<String> lineasActual = this.getLineas();
+        ArrayList<String> lineasOtro = otro.getLineas();
+        // Verificamos que ambos mensajes tengan el mismo número de líneas
+        if (lineasActual.size() != lineasOtro.size()) {
+            return false;
+        }
+        // Comprobamos que cada línea en ambos mensajes sea igual
+        for (int i = 0; i < lineasActual.size(); i++) {
+            if (!lineasActual.get(i).equals(lineasOtro.get(i))) {
+                return false;
+            }
+        }
+        // Si todas las líneas coinciden, devolvemos true
+        return true;
     }
     
     /**
