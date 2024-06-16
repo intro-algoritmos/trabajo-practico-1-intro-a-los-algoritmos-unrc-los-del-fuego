@@ -31,8 +31,10 @@ public class Mensaje
     public Mensaje()
     {
         lineas = new ArrayList<String>();
-    }private ArrayList<String> getLineas() {
-        return new ArrayList<>(lineas);
+    }
+    private ArrayList<String> getLineas() {
+        //return new ArrayList<>(lineas);
+        return lineas;
     }
      public void asignarLineas(ArrayList<String> lineas) {
         if (lineas==null){
@@ -155,6 +157,15 @@ public class Mensaje
      */
     public boolean equals(Mensaje otro)
     {
+       if(otro==null){
+           throw new IllegalArgumentException("Las lineas de los mensajes deben tener almenos un caracter.");
+        }
+       //if (this.lineas.isEmpty()) {
+         //   throw new IllegalArgumentException("No se puede comparar un mensaje si el otro esta vacio.");
+        //}
+       if (otro.getLineas().isEmpty()) {
+         throw new IllegalArgumentException("No se puede comparar un mensaje si el otro esta vacio.");
+        }
         ArrayList<String> lineasActual = this.getLineas();
         ArrayList<String> lineasOtro = otro.getLineas();
         // Verificamos que ambos mensajes tengan el mismo número de líneas
@@ -163,7 +174,7 @@ public class Mensaje
         }
         // Comprobamos que cada línea en ambos mensajes sea igual
         for (int i = 0; i < lineasActual.size(); i++) {
-            if (!lineasActual.get(i).equals(lineasOtro.get(i))) {
+            if (!lineasActual.get(i).equals(lineasOtro.get(i)) ||!esAscii(lineasActual.get(i))) {
                 return false;
             }
         }
