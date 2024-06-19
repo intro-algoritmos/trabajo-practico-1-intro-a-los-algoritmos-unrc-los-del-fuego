@@ -160,12 +160,6 @@ public class Mensaje
        if(otro==null){
            throw new IllegalArgumentException("Las lineas de los mensajes deben tener almenos un caracter.");
         }
-       //if (this.lineas.isEmpty()) {
-         //   throw new IllegalArgumentException("No se puede comparar un mensaje si el otro esta vacio.");
-        //}
-       if (otro.getLineas().isEmpty()) {
-         throw new IllegalArgumentException("No se puede comparar un mensaje si el otro esta vacio.");
-        }
         ArrayList<String> lineasActual = this.getLineas();
         ArrayList<String> lineasOtro = otro.getLineas();
         // Verificamos que ambos mensajes tengan el mismo número de líneas
