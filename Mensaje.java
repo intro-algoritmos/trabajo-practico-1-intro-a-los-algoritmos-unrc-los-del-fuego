@@ -97,7 +97,6 @@ public class Mensaje
             throw new IllegalArgumentException("La línea a agregar contiene caracteres no ascii.");
         if (pos < 0 || pos > lineas.size())
             throw new IllegalArgumentException("Posición inválida. Debe estar entre 0 y " + lineas.size() + ".");
-        
         lineas.add(pos, linea);
     }
     
